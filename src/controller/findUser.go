@@ -9,12 +9,12 @@ import "github.com/gin-gonic/gin"
 //     (ou alguma forma de chamar a busca sem precisar instanciar um domain completo)
 //  3. se err != nil, responder c.JSON(int(err.Code), err)
 //  4. se sucesso, responder c.JSON(http.StatusOK, user)
-func FindUserById(c *gin.Context) {
+func (uc *userControllerInterface) FindUserById(c *gin.Context) {
 
 }
 
 // FindUserByEmail é o controller responsável por buscar um usuário pelo e-mail.
 // Segue a mesma lógica esperada de FindUserById, mas usando c.Param("email").
-func FindUserByEmail(c *gin.Context) {
+func (uc *userControllerInterface) FindUserByEmail(c *gin.Context) {
 
 }

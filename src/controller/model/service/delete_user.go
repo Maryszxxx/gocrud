@@ -1,4 +1,4 @@
-package model
+package service
 
 import "github.com/Maryszxxx/gocrud.git/src/controller/model/view/test/config/rest_err"
 
@@ -8,7 +8,7 @@ import "github.com/Maryszxxx/gocrud.git/src/controller/model/view/test/config/re
 // correspondente no banco de dados (ex: db.DeleteOne(...)), retornando
 // um *rest_err.RestErr caso o usuário não seja encontrado ou ocorra
 // algum erro de banco.
-func (ud *UserDomain) DeleteUser(id string) *rest_err.RestErr {
+func (ud *userDomainService) DeleteUser(id string) *rest_err.RestErr {
 	// lógica de deletar no banco
 	return nil
 }

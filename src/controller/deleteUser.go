@@ -9,6 +9,6 @@ import "github.com/gin-gonic/gin"
 //  3. tratar o erro (se houver) e responder com c.JSON(...)
 //  4. em caso de sucesso, normalmente se responde com http.StatusOK
 //     ou http.StatusNoContent
-func DeleteUser(c *gin.Context) {
+func (uc *userControllerInterface) DeleteUser(c *gin.Context) {
 
 }

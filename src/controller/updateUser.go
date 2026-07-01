@@ -9,6 +9,6 @@ import "github.com/gin-gonic/gin"
 //  3. validar os dados recebidos
 //  4. montar/chamar o domain e executar domain.UpdateUser(userId)
 //  5. tratar erro ou responder com sucesso (c.JSON(http.StatusOK, ...))
-func UpdateUser(c *gin.Context) {
+func (uc *userControllerInterface) UpdateUser(c *gin.Context) {
 
 }
