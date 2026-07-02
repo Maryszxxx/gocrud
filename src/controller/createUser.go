@@ -3,51 +3,53 @@ package controller
 import (
 	"net/http"
 
-	"github.com/Maryszxxx/gocrud.git/src/controller/model"
-	"github.com/Maryszxxx/gocrud.git/src/controller/model/view/test/config/logger"
-	"github.com/Maryszxxx/gocrud.git/src/controller/model/view/test/config/rest_err/request"
-	"github.com/Maryszxxx/gocrud.git/src/controller/model/view/test/config/validation"
+	"github.com/Maryszxxx/gocrud.git/src/config/logger"
+	"github.com/Maryszxxx/gocrud.git/src/config/validation"
+	"github.com/Maryszxxx/gocrud.git/src/controller/model/request"
+
+	"github.com/Maryszxxx/gocrud.git/src/model"
 	"github.com/Maryszxxx/gocrud.git/src/view"
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
 )
 
-var (
-	UserDomainInterface model.UserDomainInterface
-)
-
 func (uc *userControllerInterface) CreateUser(c *gin.Context) {
-
-	logger.Info("CreateUser called",
-		zap.String("journey", "CreateUser"),
+	logger.Info("Init CreateUser controller",
+		zap.String("journey", "createUser"),
 	)
-
 	var userRequest request.UserRequest
 
 	if err := c.ShouldBindJSON(&userRequest); err != nil {
-
-		logger.Error("Error binding JSON: ", err)
-
+		logger.Error("Error trying to validate user info", err,
+			zap.String("journey", "createUser"))
 		errRest := validation.ValidateUserError(err)
 
-		c.JSON(http.StatusBadRequest, errRest)
+		c.JSON(int(errRest.Code), errRest)
 		return
 	}
 
 	domain := model.NewUserDomain(
-		userRequest.Name,
-		userRequest.Password,
 		userRequest.Email,
+		userRequest.Password,
+		userRequest.Name,
 		userRequest.Age,
 	)
-
-	if err := uc.service.CreateUser(domain); err != nil {
+	domainResult, err := uc.service.CreateUserServices(domain)
+	if err != nil {
+		logger.Error(
+			"Error trying to call CreateUser service",
+			err,
+			zap.String("journey", "createUser"))
 		c.JSON(int(err.Code), err)
 		return
 	}
 
-	logger.Info("User created successfully",
-		zap.String("journey", "CreateUser"))
+	logger.Info(
+		"CreateUser controller executed successfully",
+		zap.String("userId", domainResult.GetID()),
+		zap.String("journey", "createUser"))
 
-	c.JSON(http.StatusOK, view.ConvertDomainToResponse(domain))
+	c.JSON(http.StatusOK, view.ConvertDomainToResponse(
+		domainResult,
+	))
 }

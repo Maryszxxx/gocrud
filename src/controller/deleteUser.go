@@ -1,14 +1,41 @@
 package controller
 
-import "github.com/gin-gonic/gin"
+import (
+	"net/http"
 
-// DeleteUser é o controller responsável por remover um usuário.
-// AINDA NÃO IMPLEMENTADO: o esperado aqui seria:
-//  1. pegar o "userId" da URL com c.Param("userId")
-//  2. chamar algo como model.NewUserDomain(...).DeleteUser(userId)
-//  3. tratar o erro (se houver) e responder com c.JSON(...)
-//  4. em caso de sucesso, normalmente se responde com http.StatusOK
-//     ou http.StatusNoContent
+	"github.com/Maryszxxx/gocrud.git/src/config/logger"
+	"github.com/Maryszxxx/gocrud/src/model/rest_err"
+	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.uber.org/zap"
+)
+
 func (uc *userControllerInterface) DeleteUser(c *gin.Context) {
+	logger.Info("Init deleteUser controller",
+		zap.String("journey", "deleteUser"),
+	)
 
+	userId := c.Param("userId")
+	if _, err := primitive.ObjectIDFromHex(userId); err != nil {
+		errRest := rest_err.NewBadRequestError("Invalid userId, must be a hex value")
+		c.JSON(errRest.Code, errRest)
+		return
+	}
+
+	err := uc.service.DeleteUser(userId)
+	if err != nil {
+		logger.Error(
+			"Error trying to call deleteUser service",
+			err,
+			zap.String("journey", "deleteUser"))
+		c.JSON(err.Code, err)
+		return
+	}
+
+	logger.Info(
+		"deleteUser controller executed successfully",
+		zap.String("userId", userId),
+		zap.String("journey", "deleteUser"))
+
+	c.Status(http.StatusOK)
 }

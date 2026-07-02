@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 
-	"github.com/Maryszxxx/gocrud.git/src/controller/model/view/test/config/rest_err"
+	"github.com/Maryszxxx/gocrud.git/src/config/rest_err"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/locales/en"
 	ut "github.com/go-playground/universal-translator"

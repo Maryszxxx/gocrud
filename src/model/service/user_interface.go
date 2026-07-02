@@ -1,0 +1,44 @@
+package service
+
+import (
+	"github.com/Maryszxxx/gocrud.git/src/config/rest_err"
+	"github.com/Maryszxxx/gocrud.git/src/model"
+	"github.com/Maryszxxx/gocrud.git/src/model/repository"
+)
+
+// LoginUserServices implements UserDomainService.LoginUserServices
+func (s *userDomainService) LoginUserServices(
+	userDomain model.UserDomainInterface,
+) (model.UserDomainInterface, string, *rest_err.RestErr) {
+	// minimal implementation: not performing real login here
+	return nil, "", nil
+}
+
+func NewUserDomainService(
+	userRepository repository.UserRepository,
+) UserDomainService {
+	return &userDomainService{userRepository}
+}
+
+type userDomainService struct {
+	userRepository repository.UserRepository
+}
+
+type UserDomainService interface {
+	CreateUserServices(model.UserDomainInterface) (
+		model.UserDomainInterface, *rest_err.RestErr)
+
+	FindUserByIDServices(
+		id string,
+	) (model.UserDomainInterface, *rest_err.RestErr)
+	FindUserByEmailServices(
+		email string,
+	) (model.UserDomainInterface, *rest_err.RestErr)
+
+	UpdateUser(string, model.UserDomainInterface) *rest_err.RestErr
+	DeleteUser(string) *rest_err.RestErr
+
+	LoginUserServices(
+		userDomain model.UserDomainInterface,
+	) (model.UserDomainInterface, string, *rest_err.RestErr)
+}
