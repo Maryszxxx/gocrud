@@ -1,7 +1,8 @@
 package controller
 
 import (
-	"github.com/Maryszxxx/gocrud.git/src/controller/model/service"
+	"github.com/Maryszxxx/gocrud.git/src/model/service"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -25,4 +26,29 @@ type UserControllerInterface interface {
 
 type userControllerInterface struct {
 	service service.UserDomainService
+}
+
+// Implement UserControllerInterface methods with minimal stubs.
+func (u *userControllerInterface) FindUserByID(c *gin.Context) {
+	c.Status(501)
+}
+
+func (u *userControllerInterface) FindUserByEmail(c *gin.Context) {
+	c.Status(501)
+}
+
+func (u *userControllerInterface) DeleteUser(c *gin.Context) {
+	c.Status(501)
+}
+
+func (u *userControllerInterface) CreateUser(c *gin.Context) {
+	c.Status(501)
+}
+
+func (u *userControllerInterface) UpdateUser(c *gin.Context) {
+	c.Status(501)
+}
+
+func (u *userControllerInterface) LoginUser(c *gin.Context) {
+	c.Status(501)
 }

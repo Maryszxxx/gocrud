@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/Maryszxxx/gocrud.git/src/config/logger"
-	"github.com/Maryszxxx/gocrud/src/model/rest_err"
+	"github.com/Maryszxxx/gocrud.git/src/config/rest_err"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.uber.org/zap"
@@ -18,7 +18,7 @@ func (uc *userControllerInterface) DeleteUser(c *gin.Context) {
 	userId := c.Param("userId")
 	if _, err := primitive.ObjectIDFromHex(userId); err != nil {
 		errRest := rest_err.NewBadRequestError("Invalid userId, must be a hex value")
-		c.JSON(errRest.Code, errRest)
+		c.JSON(int(errRest.Code), errRest)
 		return
 	}
 
@@ -28,7 +28,7 @@ func (uc *userControllerInterface) DeleteUser(c *gin.Context) {
 			"Error trying to call deleteUser service",
 			err,
 			zap.String("journey", "deleteUser"))
-		c.JSON(err.Code, err)
+		c.JSON(int(err.Code), err)
 		return
 	}
 

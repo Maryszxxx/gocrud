@@ -4,8 +4,8 @@ import (
 	"net/http"
 	"net/mail"
 
-	"github.com/Maryszxxx/gocrud.git/src/controller/model/view/test/config/logger"
-	"github.com/Maryszxxx/gocrud.git/src/controller/model/view/test/config/rest_err"
+	"github.com/Maryszxxx/gocrud.git/src/config/logger"
+	"github.com/Maryszxxx/gocrud.git/src/config/rest_err"
 	"github.com/Maryszxxx/gocrud.git/src/view"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -28,7 +28,7 @@ func (uc *userControllerInterface) FindUserByID(c *gin.Context) {
 			"UserID is not a valid id",
 		)
 
-		c.JSON(errorMessage.Code, errorMessage)
+		c.JSON(int(errorMessage.Code), errorMessage)
 		return
 	}
 
@@ -38,7 +38,7 @@ func (uc *userControllerInterface) FindUserByID(c *gin.Context) {
 			err,
 			zap.String("journey", "findUserByID"),
 		)
-		c.JSON(err.Code, err)
+		c.JSON(int(err.Code), err)
 		return
 	}
 
@@ -50,18 +50,6 @@ func (uc *userControllerInterface) FindUserByID(c *gin.Context) {
 	))
 }
 
-// FindUserByEmail retrieves user information based on the provided email.
-// @Summary Find User by Email
-// @Description Retrieves user details based on the email provided as a parameter.
-// @Tags Users
-// @Accept json
-// @Produce json
-// @Param userEmail path string true "Email of the user to be retrieved"
-// @Param Authorization header string true "Insert your access token" default(Bearer <Add access token here>)
-// @Success 200 {object} response.UserResponse "User information retrieved successfully"
-// @Failure 400 {object} rest_err.RestErr "Error: Invalid user ID"
-// @Failure 404 {object} rest_err.RestErr "User not found"
-// @Router /getUserByEmail/{userEmail} [get]
 func (uc *userControllerInterface) FindUserByEmail(c *gin.Context) {
 	logger.Info("Init findUserByEmail controller",
 		zap.String("journey", "findUserByEmail"),
@@ -78,7 +66,7 @@ func (uc *userControllerInterface) FindUserByEmail(c *gin.Context) {
 			"UserEmail is not a valid email",
 		)
 
-		c.JSON(errorMessage.Code, errorMessage)
+		c.JSON(int(errorMessage.Code), errorMessage)
 		return
 	}
 
@@ -88,7 +76,7 @@ func (uc *userControllerInterface) FindUserByEmail(c *gin.Context) {
 			err,
 			zap.String("journey", "findUserByEmail"),
 		)
-		c.JSON(err.Code, err)
+		c.JSON(int(err.Code), err)
 		return
 	}
 

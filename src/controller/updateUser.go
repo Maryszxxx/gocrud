@@ -3,9 +3,11 @@ package controller
 import (
 	"net/http"
 
-	"github.com/Maryszxxx/gocrud.git/src/controller/model/view/test/config/logger"
-	"github.com/Maryszxxx/gocrud.git/src/controller/model/view/test/config/rest_err"
-	"github.com/Maryszxxx/gocrud.git/src/controller/model/view/test/config/validation"
+	"github.com/Maryszxxx/gocrud.git/src/config/logger"
+	"github.com/Maryszxxx/gocrud.git/src/config/rest_err"
+	"github.com/Maryszxxx/gocrud.git/src/config/validation"
+	"github.com/Maryszxxx/gocrud.git/src/controller/model/request"
+	"github.com/Maryszxxx/gocrud.git/src/model"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.uber.org/zap"
@@ -15,6 +17,7 @@ func (uc *userControllerInterface) UpdateUser(c *gin.Context) {
 	logger.Info("Init updateUser controller",
 		zap.String("journey", "updateUser"),
 	)
+
 	var userRequest request.UserUpdateRequest
 
 	if err := c.ShouldBindJSON(&userRequest); err != nil {
@@ -22,14 +25,15 @@ func (uc *userControllerInterface) UpdateUser(c *gin.Context) {
 			zap.String("journey", "updateUser"))
 		errRest := validation.ValidateUserError(err)
 
-		c.JSON(errRest.Code, errRest)
+		c.JSON(int(errRest.Code), errRest)
 		return
 	}
 
 	userId := c.Param("userId")
 	if _, err := primitive.ObjectIDFromHex(userId); err != nil {
 		errRest := rest_err.NewBadRequestError("Invalid userId, must be a hex value")
-		c.JSON(errRest.Code, errRest)
+		c.JSON(int(errRest.Code), errRest)
+		return
 	}
 
 	domain := model.NewUserUpdateDomain(
@@ -42,7 +46,7 @@ func (uc *userControllerInterface) UpdateUser(c *gin.Context) {
 			"Error trying to call updateUser service",
 			err,
 			zap.String("journey", "updateUser"))
-		c.JSON(err.Code, err)
+		c.JSON(int(err.Code), err)
 		return
 	}
 

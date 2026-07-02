@@ -11,7 +11,7 @@ func (ud *userDomain) EncryptPassword() {
 
 	defer hash.Reset()
 
-	hash.Write([]byte(ud.Password))
+	hash.Write([]byte(ud.password))
 
-	ud.Password = hex.EncodeToString(hash.Sum(nil))
+	ud.password = hex.EncodeToString(hash.Sum(nil))
 }

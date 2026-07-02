@@ -6,11 +6,11 @@ import (
 )
 
 func (ud *userDomain) SetID(id string) {
-	ud.ID = id
+	ud.id = id
 }
 
 type userDomain struct {
-	ID       string
+	id       string
 	email    string
 	password string
 	name     string
@@ -27,11 +27,11 @@ func (ud *userDomain) GetJSONValue() (string, error) {
 }
 
 func (ud *userDomain) GetID() string {
-	return ud.ID
+	return ud.id
 }
 
 func (ud *userDomain) SetID(id string) {
-	ud.ID = id
+	ud.id = id
 }
 
 func (ud *userDomain) GetEmail() string {
