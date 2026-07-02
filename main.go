@@ -5,12 +5,15 @@ import (
 
 	"github.com/Maryszxxx/gocrud.git/src/controller"
 	"github.com/Maryszxxx/gocrud.git/src/controller/model/service"
+	"github.com/Maryszxxx/gocrud.git/src/controller/model/view/test/config/database/mongodb"
 	"github.com/Maryszxxx/gocrud.git/src/controller/model/view/test/config/logger"
 	"github.com/Maryszxxx/gocrud.git/src/controller/routes"
 	"github.com/gin-gonic/gin"
 )
 
 func main() {
+
+	mongodb.InitConnection()
 
 	logger.Info("Starting the application...")
 
