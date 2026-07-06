@@ -3,6 +3,8 @@ package model
 import (
 	"encoding/json"
 	"fmt"
+
+	"github.com/Maryszxxx/gocrud.git/src/config/rest_err"
 )
 
 func (ud *userDomain) SetID(id string) {
@@ -24,14 +26,27 @@ func (ud *userDomain) GetJSONValue() (string, error) {
 		return "", err
 	}
 	return string(b), nil
+
+}
+
+func (ud *userDomain) GenerateToken() (string, *rest_err.RestErr) {
+	return "", nil
+}
+
+func NewUserDomain(
+	email, password, name string,
+	age int8,
+) UserDomainInterface {
+	return &userDomain{
+		email:    email,
+		password: password,
+		name:     name,
+		age:      age,
+	}
 }
 
 func (ud *userDomain) GetID() string {
 	return ud.id
-}
-
-func (ud *userDomain) SetID(id string) {
-	ud.id = id
 }
 
 func (ud *userDomain) GetEmail() string {
