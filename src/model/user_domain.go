@@ -33,18 +33,6 @@ func (ud *userDomain) GenerateToken() (string, *rest_err.RestErr) {
 	return "", nil
 }
 
-func NewUserDomain(
-	email, password, name string,
-	age int8,
-) UserDomainInterface {
-	return &userDomain{
-		email:    email,
-		password: password,
-		name:     name,
-		age:      age,
-	}
-}
-
 func (ud *userDomain) GetID() string {
 	return ud.id
 }

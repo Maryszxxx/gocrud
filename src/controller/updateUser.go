@@ -2,6 +2,7 @@ package controller
 
 import (
 	"net/http"
+	"strings"
 
 	"github.com/Maryszxxx/gocrud.git/src/config/logger"
 	"github.com/Maryszxxx/gocrud.git/src/config/rest_err"
@@ -14,13 +15,14 @@ import (
 )
 
 func (uc *userControllerInterface) UpdateUser(c *gin.Context) {
+	userId := c.Param("userId")
+	var userRequest request.UserUpdateRequest
+
 	logger.Info("Init updateUser controller",
 		zap.String("journey", "updateUser"),
 	)
 
-	var userRequest request.UserUpdateRequest
-
-	if err := c.ShouldBindJSON(&userRequest); err != nil {
+	if err := c.ShouldBindJSON(&userRequest); err != nil || strings.TrimSpace(userId) == "" {
 		logger.Error("Error trying to validate user info", err,
 			zap.String("journey", "updateUser"))
 		errRest := validation.ValidateUserError(err)
@@ -29,7 +31,6 @@ func (uc *userControllerInterface) UpdateUser(c *gin.Context) {
 		return
 	}
 
-	userId := c.Param("userId")
 	if _, err := primitive.ObjectIDFromHex(userId); err != nil {
 		errRest := rest_err.NewBadRequestError("Invalid userId, must be a hex value")
 		c.JSON(int(errRest.Code), errRest)
@@ -40,6 +41,7 @@ func (uc *userControllerInterface) UpdateUser(c *gin.Context) {
 		userRequest.Name,
 		userRequest.Age,
 	)
+
 	err := uc.service.UpdateUser(userId, domain)
 	if err != nil {
 		logger.Error(

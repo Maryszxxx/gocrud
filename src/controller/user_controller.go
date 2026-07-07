@@ -29,23 +29,23 @@ type userControllerInterface struct {
 }
 
 // Implement UserControllerInterface methods with minimal stubs.
-func (u *userControllerInterface) FindUserByID(c *gin.Context) {
+func (u *userControllerInterface) FindUserByIDs(c *gin.Context) {
+
+}
+
+func (u *userControllerInterface) FindUserByEmails(c *gin.Context) {
 	c.Status(501)
 }
 
-func (u *userControllerInterface) FindUserByEmail(c *gin.Context) {
+func (u *userControllerInterface) DeleteUsers(c *gin.Context) {
 	c.Status(501)
 }
 
-func (u *userControllerInterface) DeleteUser(c *gin.Context) {
+func (u *userControllerInterface) CreateUsers(c *gin.Context) {
 	c.Status(501)
 }
 
-func (u *userControllerInterface) CreateUser(c *gin.Context) {
-	c.Status(501)
-}
-
-func (u *userControllerInterface) UpdateUser(c *gin.Context) {
+func (u *userControllerInterface) UpdateUsers(c *gin.Context) {
 	c.Status(501)
 }
 
