@@ -10,7 +10,7 @@ import (
 	"github.com/Maryszxxx/gocrud.git/src/controller/model/request"
 	"github.com/Maryszxxx/gocrud.git/src/model"
 	"github.com/gin-gonic/gin"
-	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/v2/bson"
 	"go.uber.org/zap"
 )
 
@@ -31,7 +31,7 @@ func (uc *userControllerInterface) UpdateUser(c *gin.Context) {
 		return
 	}
 
-	if _, err := primitive.ObjectIDFromHex(userId); err != nil {
+	if _, err := bson.ObjectIDFromHex(userId); err != nil {
 		errRest := rest_err.NewBadRequestError("Invalid userId, must be a hex value")
 		c.JSON(int(errRest.Code), errRest)
 		return

@@ -8,7 +8,6 @@ import (
 	"github.com/Maryszxxx/gocrud.git/src/config/rest_err"
 	"github.com/Maryszxxx/gocrud.git/src/model"
 	"github.com/Maryszxxx/gocrud.git/src/model/repository/entity/converter"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/v2/bson"
 	"go.uber.org/zap"
 )
@@ -24,7 +23,7 @@ func (ur *userRepository) UpdateUser(
 	collection := ur.databaseConnection.Collection(collection_name)
 
 	value := converter.ConvertDomainToEntity(userDomain)
-	userIdHex, _ := primitive.ObjectIDFromHex(userId)
+	userIdHex, _ := bson.ObjectIDFromHex(userId)
 
 	filter := bson.D{{Key: "_id", Value: userIdHex}}
 	update := bson.D{{Key: "$set", Value: value}}

@@ -8,7 +8,7 @@ import (
 	"github.com/Maryszxxx/gocrud.git/src/config/rest_err"
 	"github.com/Maryszxxx/gocrud.git/src/view"
 	"github.com/gin-gonic/gin"
-	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/v2/bson"
 	"go.uber.org/zap"
 )
 
@@ -19,7 +19,7 @@ func (uc *userControllerInterface) FindUserByID(c *gin.Context) {
 
 	userId := c.Param("userId")
 
-	if _, err := primitive.ObjectIDFromHex(userId); err != nil {
+	if _, err := bson.ObjectIDFromHex(userId); err != nil {
 		logger.Error("Error trying to validate userId",
 			err,
 			zap.String("journey", "findUserByID"),

@@ -6,7 +6,6 @@ import (
 
 	"github.com/Maryszxxx/gocrud.git/src/config/logger"
 	"github.com/Maryszxxx/gocrud.git/src/config/rest_err"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/v2/bson"
 	"go.uber.org/zap"
 )
@@ -20,7 +19,7 @@ func (ur *userRepository) DeleteUser(
 	collection_name := os.Getenv(MONGODB_USER_DB)
 	collection := ur.databaseConnection.Collection(collection_name)
 
-	userIdHex, _ := primitive.ObjectIDFromHex(userId)
+	userIdHex, _ := bson.ObjectIDFromHex(userId)
 
 	filter := bson.D{{Key: "_id", Value: userIdHex}}
 
