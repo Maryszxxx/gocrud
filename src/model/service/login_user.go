@@ -9,7 +9,7 @@ import (
 
 func (ud *userDomainService) LoginUserServices(
 	userDomain model.UserDomainInterface,
-) (model.UserDomainInterface, *rest_err.RestErr) {
+) (model.UserDomainInterface, string, *rest_err.RestErr) {
 
 	logger.Info("Init LoginUser model.",
 		zap.String("journey", "LoginUser"))
@@ -24,12 +24,20 @@ func (ud *userDomainService) LoginUserServices(
 		logger.Error("Error trying to call repository",
 			err,
 			zap.String("journey", "loginUser"))
-		return nil, err
+		return nil, "", err
+	}
+
+	token, err := user.GenerateToken()
+	if err != nil {
+		logger.Error("Error trying to generate token",
+			err,
+			zap.String("journey", "loginUser"))
+		return nil, "", err
 	}
 
 	logger.Info(
 		"LoginUser service executed successfully",
 		zap.String("userId", user.GetID()),
 		zap.String("journey", "LoginUser"))
-	return user, nil
+	return user, token, nil
 }
