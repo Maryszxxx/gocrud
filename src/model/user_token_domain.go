@@ -3,6 +3,7 @@ package model
 import (
 	"fmt"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/Maryszxxx/gocrud.git/src/config/rest_err"
@@ -34,4 +35,11 @@ func (ud *userDomain) GenerateToken() (string, *rest_err.RestErr) {
 	}
 
 	return tokenString, nil
+}
+
+func RemoveBearerPrefix(token string) string {
+	if strings.HasPrefix(token, "Bearer ") {
+		token = strings.TrimPrefix("Bearer ", token)
+	}
+	return token
 }
