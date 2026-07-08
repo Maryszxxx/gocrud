@@ -1,13 +1,11 @@
 package controller
 
 import (
-	"fmt"
 	"net/http"
 	"net/mail"
 
 	"github.com/Maryszxxx/gocrud.git/src/config/logger"
 	"github.com/Maryszxxx/gocrud.git/src/config/rest_err"
-	"github.com/Maryszxxx/gocrud.git/src/model"
 	"github.com/Maryszxxx/gocrud.git/src/view"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/v2/bson"
@@ -18,14 +16,6 @@ func (uc *userControllerInterface) FindUserByID(c *gin.Context) {
 	logger.Info("Init findUserByID controller",
 		zap.String("journey", "findUserByID"),
 	)
-
-	user, err := model.VerifyToken(c.Request.Header.Get("Authorization"))
-	if err != nil {
-		c.JSON(int(err.Code), err)
-		return
-	}
-
-	logger.Info(fmt.Sprintf("User Authenticated: %#v", user))
 
 	userId := c.Param("userId")
 
@@ -66,14 +56,6 @@ func (uc *userControllerInterface) FindUserByEmail(c *gin.Context) {
 	)
 
 	userEmail := c.Param("userEmail")
-
-	user, err := model.VerifyToken(c.Request.Header.Get("Authorization"))
-	if err != nil {
-		c.JSON(int(err.Code), err)
-		return
-	}
-
-	logger.Info(fmt.Sprintf("User Authenticated: %#v", user))
 
 	if _, err := mail.ParseAddress(userEmail); err != nil {
 		logger.Error("Error trying to validate userEmail",
