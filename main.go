@@ -14,7 +14,10 @@ import (
 func main() {
 	logger.Info("About to start user application")
 
-	godotenv.Load()
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
 
 	database, err := mongodb.NewMongoDBConnection(context.Background())
 	if err != nil {

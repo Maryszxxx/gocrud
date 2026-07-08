@@ -49,6 +49,6 @@ func (u *userControllerInterface) UpdateUsers(c *gin.Context) {
 	c.Status(501)
 }
 
-func (u *userControllerInterface) LoginUser(c *gin.Context) {
+func (u *userControllerInterface) LoginUsers(c *gin.Context) {
 	c.Status(501)
 }

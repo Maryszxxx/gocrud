@@ -6,14 +6,6 @@ import (
 	"github.com/Maryszxxx/gocrud.git/src/model/repository"
 )
 
-// LoginUserServices implements UserDomainService.LoginUserServices
-func (s *userDomainService) LoginUserServices(
-	userDomain model.UserDomainInterface,
-) (model.UserDomainInterface, string, *rest_err.RestErr) {
-	// minimal implementation: not performing real login here
-	return nil, "", nil
-}
-
 func NewUserDomainService(
 	userRepository repository.UserRepository,
 ) UserDomainService {
@@ -40,5 +32,5 @@ type UserDomainService interface {
 
 	LoginUserServices(
 		userDomain model.UserDomainInterface,
-	) (model.UserDomainInterface, string, *rest_err.RestErr)
+	) (model.UserDomainInterface, *rest_err.RestErr)
 }
