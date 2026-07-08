@@ -42,6 +42,14 @@ func NewBadRequestError(message string) *RestErr {
 	}
 }
 
+func NewUnauthorizedRequestError(message string) *RestErr {
+	return &RestErr{
+		Message: message,
+		Err:     "unauthorized",
+		Code:    http.StatusUnauthorized,
+	}
+}
+
 // NewBadRequestValidationError cria um erro 400 (Bad Request) já incluindo
 // a lista de causas — usado quando a validação de campos falha (ver validateUser.go).
 func NewBadRequestValidationError(message string, Causes []Causes) *RestErr {
