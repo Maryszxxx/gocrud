@@ -1,0 +1,126 @@
+basePath: /
+definitions:
+  request.UserLogin:
+    properties:
+      email:
+        type: string
+      password:
+        maxLength: 100
+        minLength: 6
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  response.UserResponse:
+    properties:
+      age:
+        type: integer
+      email:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+    required:
+    - age
+    - email
+    - name
+    type: object
+  rest_err.Causes:
+    properties:
+      field:
+        type: string
+      message:
+        type: string
+    type: object
+  rest_err.RestErr:
+    properties:
+      causes:
+        description: lista de causas específicas (útil em erros de validação)
+        items:
+          $ref: '#/definitions/rest_err.Causes'
+        type: array
+      code:
+        description: código HTTP correspondente (400, 404, 500 etc)
+        type: integer
+      error:
+        description: '"tipo" do erro, em formato de slug (ex: "bad_request")'
+        type: string
+      message:
+        description: mensagem geral do erro, legível para humanos
+        type: string
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API for crud operations on users
+  title: Meu Primeiro CRUD em Go
+  version: "1.0"
+paths:
+  /getUserByEmail/{userEmail}:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves user details based on the email provided as a parameter
+      parameters:
+      - description: Email of the user to be retrieved
+        in: path
+        name: userEmail
+        required: true
+        type: string
+      - default: Bearer <Add access token here>
+        description: Insert your access token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.UserResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/rest_err.RestErr'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/rest_err.RestErr'
+      summary: Find User by Email
+      tags:
+      - Users
+  /login:
+    post:
+      consumes:
+      - application/json
+      description: Allows a user to log in and receive an authentication token
+      parameters:
+      - description: User login credentials
+        in: body
+        name: userLogin
+        required: true
+        schema:
+          $ref: '#/definitions/request.UserLogin'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Authorization:
+              description: Authentication token
+              type: string
+          schema:
+            $ref: '#/definitions/response.UserResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/rest_err.RestErr'
+      summary: User Login
+      tags:
+      - Authentication
+swagger: "2.0"

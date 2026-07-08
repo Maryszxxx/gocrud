@@ -12,6 +12,17 @@ import (
 	"go.uber.org/zap"
 )
 
+// LoginUser godoc
+// @Summary User Login
+// @Description Allows a user to log in and receive an authentication token
+// @Tags Authentication
+// @Accept json
+// @Produce json
+// @Param userLogin body request.UserLogin true "User login credentials"
+// @Success 200 {object} response.UserResponse
+// @Header 200 {string} Authorization "Authentication token"
+// @Failure 403 {object} rest_err.RestErr
+// @Router /login [post]
 func (uc *userControllerInterface) LoginUser(c *gin.Context) {
 	logger.Info("Init LoginUser controller",
 		zap.String("journey", "loginUser"),
