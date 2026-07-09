@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  meuprimeirocrudgo:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
+    depends_on: 
+      - mongodb
+    networks:
+      - meuprimeirocrudgo_network
+
+
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    networks:
+      - meuprimeirocrudgo_network
+
+
+networks:
+  meuprimeirocrudgo_network:
+
+

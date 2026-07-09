@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 
+	_ "github.com/Maryszxxx/gocrud.git/docs"
 	"github.com/Maryszxxx/gocrud.git/src/config/database/mongodb"
 	"github.com/Maryszxxx/gocrud.git/src/config/logger"
 	"github.com/Maryszxxx/gocrud.git/src/controller/routes"
@@ -43,5 +44,3 @@ func main() {
 		log.Fatal(err)
 	}
 }
-
-// docker container run -d -p 27017:27017 mongo (inicializador mongodb)
