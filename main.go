@@ -16,6 +16,7 @@ import (
 // @description API for crud operations on users
 // @host localhost:8080
 // @BasePath /
+
 func main() {
 	logger.Info("About to start user application")
 
